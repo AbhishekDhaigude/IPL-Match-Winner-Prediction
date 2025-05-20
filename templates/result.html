@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IPL Team Prediction Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="results">
+            <h2>Predicted Dream11 Team</h2>
+
+            <div class="team-distribution">
+                <div class="team-pill team1-pill">{{ team1 }}: {{ team1_count }}</div>
+                <div class="team-pill team2-pill">{{ team2 }}: {{ team2_count }}</div>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Role</th>
+                        <th>Team</th>
+                        <th>Cost</th>
+                        <th>Captain/Vice</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for player in team %}
+                        <tr>
+                            <td>{{ player.name }}</td>
+                            <td>{{ player.role }}</td>
+                            <td>{{ player.team }}</td>
+                            <td>{{ player.cost }}</td>
+                            <td>{{ player.team_role }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <div class="win-prediction">
+                <h3>Match Win Prediction</h3>
+                <div class="teams">
+                    <div class="team">
+                        <div class="team-name">{{ team1 }}</div>
+                        <div class="percentage-bar">
+                            <div class="percentage-fill" style="width: {{ team1_win_prob }}%;"></div>
+                        </div>
+                        <div class="percentage-value">{{ team1_win_prob }}%</div>
+                    </div>
+                    <div class="team">
+                        <div class="team-name">{{ team2 }}</div>
+                        <div class="percentage-bar">
+                            <div class="percentage-fill" style="width: {{ team2_win_prob }}%;"></div>
+                        </div>
+                        <div class="percentage-value">{{ team2_win_prob }}%</div>
+                    </div>
+                </div>
+            </div>
+
+            <a href="/" class="back-button">Make Another Prediction</a>
+        </div>
+    </div>
+</body>
+</html>

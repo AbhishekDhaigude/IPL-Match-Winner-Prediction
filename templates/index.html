@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IPL Team Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="prediction-form">
+            <h1>IPL Team Prediction</h1>
+            <div class="input-group">
+                <label for="team1">Team 1</label>
+                <select id="team1" name="team1">
+                    <option value="">Select Team 1</option>
+                    <option value="Mumbai Indians">Mumbai Indians</option>
+                    <option value="Chennai Super Kings">Chennai Super Kings</option>
+                    <option value="Royal Challengers Bangalore">Royal Challengers Bangalore</option>
+                    <option value="Kolkata Knight Riders">Kolkata Knight Riders</option>
+                    <option value="Delhi Capitals">Delhi Capitals</option>
+                    <option value="Sunrisers Hyderabad">Sunrisers Hyderabad</option>
+                    <option value="Punjab Kings">Punjab Kings</option>
+                    <option value="Rajasthan Royals">Rajasthan Royals</option>
+                    <option value="Gujarat Titans">Gujarat Titans</option>
+                    <option value="Lucknow Super Giants">Lucknow Super Giants</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="team2">Team 2</label>
+                <select id="team2" name="team2">
+                    <option value="">Select Team 2</option>
+                    <option value="Mumbai Indians">Mumbai Indians</option>
+                    <option value="Chennai Super Kings">Chennai Super Kings</option>
+                    <option value="Royal Challengers Bangalore">Royal Challengers Bangalore</option>
+                    <option value="Kolkata Knight Riders">Kolkata Knight Riders</option>
+                    <option value="Delhi Capitals">Delhi Capitals</option>
+                    <option value="Sunrisers Hyderabad">Sunrisers Hyderabad</option>
+                    <option value="Punjab Kings">Punjab Kings</option>
+                    <option value="Rajasthan Royals">Rajasthan Royals</option>
+                    <option value="Gujarat Titans">Gujarat Titans</option>
+                    <option value="Lucknow Super Giants">Lucknow Super Giants</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="venue">Venue</label>
+                <select id="venue" name="venue">
+                    <option value="">Select Venue</option>
+                    <option value="Wankhede Stadium">Wankhede Stadium</option>
+                    <option value="M.A. Chidambaram Stadium">M.A. Chidambaram Stadium</option>
+                    <option value="Eden Gardens">Eden Gardens</option>
+                    <option value="M. Chinnaswamy Stadium">M. Chinnaswamy Stadium</option>
+                    <option value="Arun Jaitley Stadium">Arun Jaitley Stadium</option>
+                    <option value="Rajiv Gandhi International Stadium">Rajiv Gandhi International Stadium</option>
+                    <option value="Punjab Cricket Association Stadium">Punjab Cricket Association Stadium</option>
+                    <option value="Sawai Mansingh Stadium">Sawai Mansingh Stadium</option>
+                    <option value="Narendra Modi Stadium">Narendra Modi Stadium</option>
+                    <option value="Bharat Ratna Shri Atal Bihari Vajpayee Ekana Cricket Stadium">Ekana Cricket Stadium</option>
+                </select>
+            </div>
+            <button id="submitBtn">Submit</button>
+        </div>
+        
+        <div class="results" id="results" style="display:none;">
+            <h2>Predicted Team</h2>
+            <div class="team-distribution">
+                <div class="team-pill team1-pill" id="team1-count"></div>
+                <div class="team-pill team2-pill" id="team2-count"></div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Role</th>
+                        <th>Team</th>
+                        <th>Cost</th>
+                    </tr>
+                </thead>
+                <tbody id="teamTable"></tbody>
+            </table>
+            
+            <div class="win-prediction">
+                <h3>Match Win Prediction</h3>
+                <div class="teams">
+                    <div class="team">
+                        <div class="team-name" id="team1-name"></div>
+                        <div class="percentage-bar">
+                            <div class="percentage-fill" id="team1-percentage"></div>
+                        </div>
+                        <div class="percentage-value" id="team1-percentage-value"></div>
+                    </div>
+                    <div class="team">
+                        <div class="team-name" id="team2-name"></div>
+                        <div class="percentage-bar">
+                            <div class="percentage-fill" id="team2-percentage"></div>
+                        </div>
+                        <div class="percentage-value" id="team2-percentage-value"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('submitBtn').addEventListener('click', function() {
+            const team1 = document.getElementById('team1').value;
+            const team2 = document.getElementById('team2').value;
+            const venue = document.getElementById('venue').value;
+            
+            if (!team1 || !team2 || !venue) {
+                alert('Please select both teams and venue');
+                return;
+            }
+            
+            if (team1 === team2) {
+                alert('Please select different teams');
+                return;
+            }
+            
+            // Show loading state
+            document.getElementById('submitBtn').disabled = true;
+            document.getElementById('submitBtn').textContent = 'Loading...';
+            
+            // Make AJAX request to backend
+            fetch('/predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                body: JSON.stringify({
+                    team1: team1,
+                    team2: team2,
+                    venue: venue
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Reset button state
+                document.getElementById('submitBtn').disabled = false;
+                document.getElementById('submitBtn').textContent = 'Submit';
+                
+                if (!data.success) {
+                    alert(data.error || 'An error occurred');
+                    return;
+                }
+                
+                // Update team distribution
+                document.getElementById('team1-count').textContent = `${team1}: ${data.team_distribution[team1]}`;
+                document.getElementById('team2-count').textContent = `${team2}: ${data.team_distribution[team2]}`;
+                
+                // Update win prediction
+                document.getElementById('team1-name').textContent = team1;
+                document.getElementById('team2-name').textContent = team2;
+                document.getElementById('team1-percentage').style.width = `${data.win_prediction[team1]}%`;
+                document.getElementById('team2-percentage').style.width = `${data.win_prediction[team2]}%`;
+                document.getElementById('team1-percentage-value').textContent = `${data.win_prediction[team1]}%`;
+                document.getElementById('team2-percentage-value').textContent = `${data.win_prediction[team2]}%`;
+                
+                // Clear existing table
+                const tableBody = document.getElementById('teamTable');
+                tableBody.innerHTML = '';
+                
+                // Populate table with predicted team
+                data.team.forEach(player => {
+                    const row = document.createElement('tr');
+                    if (player.team_role === "Captain") {
+                        row.classList.add('captain');
+                    } else if (player.team_role === "Vice-Captain") {
+                        row.classList.add('vice-captain');
+                    }
+                    
+                    row.innerHTML = `
+                        <td>${player.name}</td>
+                        <td>${player.role}</td>
+                        <td>${player.team}</td>
+                        <td>${player.cost}</td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+                
+                // Show results
+                document.getElementById('results').style.display = 'block';
+                
+                // Scroll to results
+                document.getElementById('results').scrollIntoView({behavior: 'smooth'});
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('submitBtn').disabled = false;
+                document.getElementById('submitBtn').textContent = 'Submit';
+                alert('An error occurred. Please try again.');
+            });
+        });
+    </script>
+</body>
+</html>

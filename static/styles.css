@@ -1,0 +1,234 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background: url(/static/wankhede-stadium-churchgate-mumbai-stadiums-xuu1151zxw.webp) no-repeat center center fixed;
+    background-size: cover;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container {
+    width: 90%;
+    max-width: 900px;
+    padding: 20px;
+}
+
+.prediction-form {
+    background-color: rgba(0, 0, 50, 0.8);
+    border-radius: 10px;
+    padding: 30px;
+    color: white;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+    margin-top: 50px;
+}
+
+h1 {
+    text-align: center;
+    font-size: 32px;
+    margin-bottom: 30px;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 18px;
+    color: #ccc;
+}
+
+select {
+    width: 100%;
+    padding: 12px;
+    border-radius: 5px;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.9);
+    font-size: 16px;
+    color: #333;
+}
+
+button {
+    background: linear-gradient(90deg, #0078d4, #00a2ff);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: block;
+    margin: 30px auto 0;
+    min-width: 150px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+button:disabled {
+    background: #cccccc;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.results {
+    margin-top: 40px;
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.results h2 {
+    text-align: center;
+    color: #0078d4;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 30px;
+}
+
+th, td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+tr:hover {
+    background-color: #f5f5f5;
+}
+
+.win-prediction {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.win-prediction h3 {
+    margin-bottom: 15px;
+    color: #0078d4;
+}
+
+.teams {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.team {
+    width: 45%;
+    text-align: center;
+}
+
+.team-name {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.percentage-bar {
+    height: 20px;
+    background-color: #e0e0e0;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 5px;
+}
+
+.percentage-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #0078d4, #00a2ff);
+    border-radius: 10px;
+}
+
+.percentage-value {
+    font-weight: bold;
+    color: #333;
+}
+
+tr.captain {
+    background-color: rgba(255, 215, 0, 0.2);
+}
+
+tr.vice-captain {
+    background-color: rgba(192, 192, 192, 0.2);
+}
+
+.team-distribution {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+}
+
+.team-pill {
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-weight: bold;
+}
+
+.team1-pill {
+    background-color: #007bff;
+    color: white;
+}
+
+.team2-pill {
+    background-color: #ff6b00;
+    color: white;
+}
+
+.back-button {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #0078d4;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.back-button:hover {
+    background-color: #005fa3;
+}
+
+.error-container {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 30px;
+    margin-top: 50px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.error-title {
+    color: #e74c3c;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.error-message {
+    font-size: 18px;
+    margin-bottom: 30px;
+    color: #555;
+}
